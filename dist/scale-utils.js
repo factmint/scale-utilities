@@ -1,6 +1,6 @@
 define(['number-utils'],
 function(NumberUtils) {
-	return = {
+	return {
 		Scale: function(pixelOffset, pixelRange, minValue, maxValue) {
 			this.start = pixelOffset;
 			this.middle = pixelOffset + pixelRange / 2;
