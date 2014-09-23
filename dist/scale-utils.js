@@ -9,8 +9,18 @@ function(NumberUtils) {
 				throw "Min value and max are the same";
 			}
 			var backwards = (minValue > maxValue) ? true : false;
-			this.getPixel = function(point) {
-				if (point < minValue || point > maxValue) {
+			this.getPixel = function(point, allowOutOfRangeValues) {
+				
+				if (typeof allowOutOfRangeValues === 'undefined') {
+					allowOutOfRangeValues = true;
+				} else {
+					allowOutOfRangeValues = false;
+				}
+
+				if (
+					(point < minValue || point > maxValue) &&
+					allowOutOfRangeValues === false
+				) {
 					if (! (backwards && point <= minValue && point >= maxValue)) {
 						throw "Out of range";
 					}
@@ -105,7 +115,5 @@ function(NumberUtils) {
 
       }
 
-    }
-    
 	}
 });
