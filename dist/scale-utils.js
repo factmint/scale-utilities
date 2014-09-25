@@ -53,11 +53,11 @@ function(NumberUtils) {
 			
 			range = getNiceNumber( maxValue - minValue, false );
 			tickSpacing = getNiceNumber( range / ( targetMarkerCount - 1 ), true );
-			graphmin = Math.floor( minValue / tickSpacing ) * tickSpacing;
-			graphmax = Math.ceil( maxValue / tickSpacing ) * tickSpacing;
+			graphMin = Math.floor( minValue / tickSpacing ) * tickSpacing;
+			graphMax = Math.ceil( maxValue / tickSpacing ) * tickSpacing;
 			decimalPlaces = Math.max( -Math.floor( log10( tickSpacing ) ), 1 );
 			
-			for( value = graphmin; value < graphmax + 0.5 * tickSpacing; value += tickSpacing ){
+			for( value = graphMin; value < graphMax + 0.5 * tickSpacing; value += tickSpacing ){
 				values.push( parseFloat( value.toFixed(decimalPlaces) ) );
 			}
 
