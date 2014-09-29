@@ -39,9 +39,11 @@ function(NumberUtils) {
 		 * @param	{Number} minValue					
 		 * @param	{Number} maxValue					
 		 * @param	{Number} targetMarkerCount 
+     * @param {Boolean} padExtraTick  Adds an extra tick mark to the beginning
+     *                                and end  
 		 * @return {Array}									 
 		 */
-		getTickMarks: function(minValue, maxValue, targetMarkerCount) {
+		getTickMarks: function(minValue, maxValue, targetMarkerCount, padExtraTick) {
 			
 			var decimalPlaces = 0;
 			var tickSpacing = 0;
@@ -50,6 +52,8 @@ function(NumberUtils) {
 			var range = 0;
 			var value = 0;
 			var values = [];
+      var startPoint = 0;
+      var endPoint = 0;
 			
 			range = getNiceNumber( maxValue - minValue, false );
 			tickSpacing = getNiceNumber( range / ( targetMarkerCount - 1 ), true );
@@ -57,9 +61,16 @@ function(NumberUtils) {
 			graphMax = Math.ceil( maxValue / tickSpacing ) * tickSpacing;
 			decimalPlaces = Math.max( -Math.floor( log10( tickSpacing ) ), 1 );
 			
-			for( value = graphMin; value < graphMax + 0.5 * tickSpacing; value += tickSpacing ){
-				values.push( parseFloat( value.toFixed(decimalPlaces) ) );
-			}
+      startPoint = graphMin;
+      endPoint = graphMax + 0.5 * tickSpacing;
+      if( padExtraTick ){
+        startPoint -= tickSpacing;
+        endPoint += tickSpacing;
+      }
+
+			for( value = startPoint; value < endPoint; value += tickSpacing ){
+        values.push( parseFloat( value.toFixed(decimalPlaces) ) );
+      }
 
 			return values;
 			
