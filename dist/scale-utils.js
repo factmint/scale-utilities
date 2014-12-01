@@ -5,9 +5,11 @@ define(['number-utils'],
 				this.start = pixelOffset;
 				this.middle = pixelOffset + pixelRange / 2;
 				this.end = pixelOffset + pixelRange;
+				
 				if (minValue == maxValue) {
 					throw "Min value and max are the same";
 				}
+				
 				var backwards = (minValue > maxValue) ? true : false;
 				this.getPixel = function(point, allowOutOfRangeValues) {
 
@@ -27,6 +29,39 @@ define(['number-utils'],
 						}
 					}
 					var proportion = (point - minValue) / (maxValue - minValue);
+					return pixelOffset + pixelRange * proportion;
+				};
+			},
+			AreaScale: function(pixelOffset, pixelRange, minValue, maxValue) {
+				this.start = pixelOffset;
+				this.middle = pixelOffset + pixelRange / 2;
+				this.midValue = minValue + ((maxValue - minValue) * Math.pow(0.5, 2));
+				this.end = pixelOffset + pixelRange;
+				
+				if (minValue == maxValue) {
+					throw "Min value and max are the same";
+				}
+				
+				var backwards = (minValue > maxValue) ? true : false;
+				this.getPixel = function(point, allowOutOfRangeValues) {
+
+					if (typeof allowOutOfRangeValues === 'undefined') {
+						allowOutOfRangeValues = true;
+					}
+					else {
+						allowOutOfRangeValues = false;
+					}
+
+					if (
+						(point < minValue || point > maxValue) &&
+						allowOutOfRangeValues === false
+					) {
+						if (!(backwards && point <= minValue && point >= maxValue)) {
+							throw "Out of range";
+						}
+					}
+					var squaredProportion = (point - minValue) / (maxValue - minValue);
+					var proportion = Math.pow(squaredProportion, 0.5);
 					return pixelOffset + pixelRange * proportion;
 				};
 			},
