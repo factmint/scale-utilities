@@ -90,9 +90,18 @@ define(['number-utils'],
 				var values = [];
 				var startPoint = 0;
 				var endPoint = 0;
+				
+				if (minValue == maxValue) {
+					var padding = (maxValue !== 0) ? maxValue / 10 : 1;
+					
+					minValue -= padding;
+					maxValue += padding;
+				}
 
 				range = maxValue - minValue;
+				
 				tickSpacing = getNiceNumber(range / (targetMarkerCount - 1), true);
+				
 				graphMin = Math.floor(minValue / tickSpacing) * tickSpacing;
 				graphMax = Math.ceil(maxValue / tickSpacing) * tickSpacing;
 				decimalPlaces = Math.max(-Math.floor(log10(tickSpacing)), 1);
