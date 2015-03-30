@@ -7,7 +7,14 @@ define(['number-utils'],
 				this.end = pixelOffset + pixelRange;
 				
 				if (minValue == maxValue) {
-					throw "Min value and max are the same";
+					if (minValue === 0) {
+						minValue = 0;
+						maxValue = 1;
+					} else {
+						var difference = Math.abs(minValue * 1/10);
+						minValue = minValue - difference;
+						maxValue = maxValue + difference;
+					}
 				}
 				
 				var backwards = (minValue > maxValue) ? true : false;
